@@ -1,23 +1,58 @@
 [
-  {
-    "id": "AAPL",
-    "ticker": "AAPL",
-    "name": "Apple",
-    "logo": "apple",
-    "type": "stock"
-  },
-  {
-    "id": "MSFT",
-    "ticker": "MSFT",
-    "name": "Microsoft",
-    "logo": "microsoft",
-    "type": "stock"
-  },
-  {
-    "id": "GOOGL",
-    "ticker": "GOOGL",
-    "name": "Alphabet",
-    "logo": "google",
-    "type": "stock"
-  }
+  { "id": "AAPL", "ticker": "AAPL", "name": "Apple", "logo": "apple", "type": "stock" },
+  { "id": "MSFT", "ticker": "MSFT", "name": "Microsoft", "logo": "microsoft", "type": "stock" },
+  { "id": "GOOGL", "ticker": "GOOGL", "name": "Alphabet", "logo": "google", "type": "stock" },
+
+  { "id": "AMZN", "ticker": "AMZN", "name": "Amazon", "logo": "amazon", "type": "stock" },
+  { "id": "NVDA", "ticker": "NVDA", "name": "NVIDIA", "logo": "nvidia", "type": "stock" },
+  { "id": "META", "ticker": "META", "name": "Meta", "logo": "meta", "type": "stock" },
+  { "id": "TSLA", "ticker": "TSLA", "name": "Tesla", "logo": "tesla", "type": "stock" },
+  { "id": "AMD", "ticker": "AMD", "name": "AMD", "logo": "amd", "type": "stock" },
+  { "id": "NFLX", "ticker": "NFLX", "name": "Netflix", "logo": "netflix", "type": "stock" },
+  { "id": "DIS", "ticker": "DIS", "name": "Disney", "logo": "disney", "type": "stock" },
+  { "id": "JPM", "ticker": "JPM", "name": "JPMorgan Chase", "logo": "jpm", "type": "stock" },
+  { "id": "KO", "ticker": "KO", "name": "Coca-Cola", "logo": "cocacola", "type": "stock" },
+  { "id": "BA", "ticker": "BA", "name": "Boeing", "logo": "boeing", "type": "stock" },
+
+  { "id": "WMT", "ticker": "WMT", "name": "Walmart", "logo": "walmart", "type": "stock" },
+  { "id": "COST", "ticker": "COST", "name": "Costco", "logo": "costco", "type": "stock" },
+  { "id": "TGT", "ticker": "TGT", "name": "Target", "logo": "target", "type": "stock" },
+  { "id": "HD", "ticker": "HD", "name": "Home Depot", "logo": "homedepot", "type": "stock" },
+  { "id": "MCD", "ticker": "MCD", "name": "McDonald's", "logo": "mcdonalds", "type": "stock" },
+  { "id": "SBUX", "ticker": "SBUX", "name": "Starbucks", "logo": "starbucks", "type": "stock" },
+  { "id": "NKE", "ticker": "NKE", "name": "Nike", "logo": "nike", "type": "stock" },
+  { "id": "PEP", "ticker": "PEP", "name": "PepsiCo", "logo": "pepsi", "type": "stock" },
+  { "id": "PG", "ticker": "PG", "name": "Procter & Gamble", "logo": "pg", "type": "stock" },
+
+  { "id": "V", "ticker": "V", "name": "Visa", "logo": "visa", "type": "stock" },
+  { "id": "MA", "ticker": "MA", "name": "Mastercard", "logo": "mastercard", "type": "stock" },
+  { "id": "PYPL", "ticker": "PYPL", "name": "PayPal", "logo": "paypal", "type": "stock" },
+  { "id": "BAC", "ticker": "BAC", "name": "Bank of America", "logo": "bankofamerica", "type": "stock" },
+  { "id": "GS", "ticker": "GS", "name": "Goldman Sachs", "logo": "goldmansachs", "type": "stock" },
+  { "id": "MS", "ticker": "MS", "name": "Morgan Stanley", "logo": "morganstanley", "type": "stock" },
+  { "id": "C", "ticker": "C", "name": "Citigroup", "logo": "citigroup", "type": "stock" },
+
+  { "id": "JNJ", "ticker": "JNJ", "name": "Johnson & Johnson", "logo": "jnj", "type": "stock" },
+  { "id": "UNH", "ticker": "UNH", "name": "UnitedHealth Group", "logo": "unh", "type": "stock" },
+  { "id": "PFE", "ticker": "PFE", "name": "Pfizer", "logo": "pfizer", "type": "stock" },
+  { "id": "MRNA", "ticker": "MRNA", "name": "Moderna", "logo": "moderna", "type": "stock" },
+
+  { "id": "ADBE", "ticker": "ADBE", "name": "Adobe", "logo": "adobe", "type": "stock" },
+  { "id": "CRM", "ticker": "CRM", "name": "Salesforce", "logo": "salesforce", "type": "stock" },
+  { "id": "ORCL", "ticker": "ORCL", "name": "Oracle", "logo": "oracle", "type": "stock" },
+  { "id": "IBM", "ticker": "IBM", "name": "IBM", "logo": "ibm", "type": "stock" },
+  { "id": "INTC", "ticker": "INTC", "name": "Intel", "logo": "intel", "type": "stock" },
+  { "id": "QCOM", "ticker": "QCOM", "name": "Qualcomm", "logo": "qualcomm", "type": "stock" },
+  { "id": "CSCO", "ticker": "CSCO", "name": "Cisco", "logo": "cisco", "type": "stock" },
+  { "id": "UBER", "ticker": "UBER", "name": "Uber", "logo": "uber", "type": "stock" },
+  { "id": "ABNB", "ticker": "ABNB", "name": "Airbnb", "logo": "airbnb", "type": "stock" },
+
+  { "id": "XOM", "ticker": "XOM", "name": "Exxon Mobil", "logo": "exxon", "type": "stock" },
+  { "id": "CVX", "ticker": "CVX", "name": "Chevron", "logo": "chevron", "type": "stock" },
+  { "id": "GE", "ticker": "GE", "name": "GE Aerospace", "logo": "ge", "type": "stock" },
+  { "id": "CAT", "ticker": "CAT", "name": "Caterpillar", "logo": "caterpillar", "type": "stock" },
+  { "id": "DE", "ticker": "DE", "name": "John Deere", "logo": "deere", "type": "stock" },
+  { "id": "LMT", "ticker": "LMT", "name": "Lockheed Martin", "logo": "lockheed", "type": "stock" },
+  { "id": "F", "ticker": "F", "name": "Ford", "logo": "ford", "type": "stock" },
+  { "id": "GM", "ticker": "GM", "name": "General Motors", "logo": "gm", "type": "stock" }
 ]
