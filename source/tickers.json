@@ -1,0 +1,23 @@
+[
+  {
+    "id": "AAPL",
+    "ticker": "AAPL",
+    "name": "Apple",
+    "logo": "apple",
+    "type": "stock"
+  },
+  {
+    "id": "MSFT",
+    "ticker": "MSFT",
+    "name": "Microsoft",
+    "logo": "microsoft",
+    "type": "stock"
+  },
+  {
+    "id": "GOOGL",
+    "ticker": "GOOGL",
+    "name": "Alphabet",
+    "logo": "google",
+    "type": "stock"
+  }
+]
