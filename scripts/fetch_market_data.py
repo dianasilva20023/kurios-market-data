@@ -5,6 +5,7 @@ import requests
 from pathlib import Path
 from datetime import datetime, timezone
 from dotenv import load_dotenv
+from dateutil.relativedelta import relativedelta
 
 load_dotenv()
 
@@ -22,7 +23,8 @@ START_DATE = "2015-01-01"
 
 # None = hasta el último dato disponible en Tiingo.
 END_DATE = None
-
+SUMMARY_FILE_NAME = "market_turn_summary.json"
+TURN_LENGTH_MONTHS = 1
 REQUEST_DELAY_SECONDS = 1.0
 
 
@@ -134,12 +136,121 @@ def build_asset_payload(asset, prices):
         "prices": prices
     }
 
+def parse_date(date_str):
+    return datetime.strptime(date_str, "%Y-%m-%d")
+
+
+def get_closest_price_on_or_before(prices, target_date):
+    selected = None
+
+    for row in prices:
+        row_date = parse_date(row[0])
+
+        if row_date <= target_date:
+            selected = row
+        else:
+            break
+
+    return selected
+
+
+def build_market_turn_summary(assets_payloads):
+    """
+    Crea un resumen mensual por marketTurn para que Unity pueda pintar
+    las tarjetas sin descargar los 50 JSON completos.
+    """
+
+    start_dt = parse_date(START_DATE)
+
+    # Buscamos hasta qué fecha llega la data.
+    last_dates = []
+
+    for item in assets_payloads:
+        prices = item["payload"].get("prices", [])
+
+        if prices:
+            last_dates.append(parse_date(prices[-1][0]))
+
+    if not last_dates:
+        return {
+            "schema": "kurios.market.summary.v1",
+            "source": "Tiingo",
+            "version": DATA_VERSION,
+            "startDate": START_DATE,
+            "turnLengthMonths": TURN_LENGTH_MONTHS,
+            "assets": []
+        }
+
+    global_last_date = min(last_dates)
+
+    # Cantidad de turnos mensuales posibles desde START_DATE hasta la menor fecha final común.
+    total_months = (global_last_date.year - start_dt.year) * 12 + (global_last_date.month - start_dt.month)
+
+    summary_assets = []
+
+    for item in assets_payloads:
+        asset = item["asset"]
+        payload = item["payload"]
+        prices = payload.get("prices", [])
+
+        turns = []
+
+        previous_close = None
+
+        for market_turn in range(0, total_months + 1):
+            target_date = start_dt + relativedelta(months=market_turn * TURN_LENGTH_MONTHS)
+
+            price_row = get_closest_price_on_or_before(prices, target_date)
+
+            if price_row is None:
+                continue
+
+            date_str = price_row[0]
+            close_price = round(float(price_row[4]), 2)
+
+            if previous_close is None:
+                change_value = 0
+                change_pct = 0
+            else:
+                change_value = round(close_price - previous_close, 2)
+                change_pct = round((change_value / previous_close) * 100, 2) if previous_close != 0 else 0
+
+            turns.append({
+                "marketTurn": market_turn,
+                "date": date_str,
+                "price": close_price,
+                "previousPrice": previous_close if previous_close is not None else close_price,
+                "changeValue": change_value,
+                "changePct": change_pct
+            })
+
+            previous_close = close_price
+
+        summary_assets.append({
+            "id": asset["id"],
+            "ticker": asset["ticker"],
+            "name": asset["name"],
+            "logo": asset.get("logo", ""),
+            "type": asset.get("type", "stock"),
+            "turns": turns
+        })
+
+    return {
+        "schema": "kurios.market.summary.v1",
+        "source": "Tiingo",
+        "version": DATA_VERSION,
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "startDate": START_DATE,
+        "turnLengthMonths": TURN_LENGTH_MONTHS,
+        "assets": summary_assets
+    }
 
 def main():
     with open(TICKERS_PATH, "r", encoding="utf-8") as file:
         assets = json.load(file)
 
     manifest_assets = []
+    assets_payloads = []
 
     for index, asset in enumerate(assets):
         ticker = asset["ticker"]
@@ -168,7 +279,11 @@ def main():
                 "changePct": payload["changePct"],
                 "priceCount": len(prices)
             })
-
+            
+            assets_payloads.append({
+   		 "asset": asset,
+   		 "payload": payload
+            })		
             print(f"OK {ticker}: {len(prices)} velas guardadas en {output_path}")
 
         except Exception as error:
@@ -194,7 +309,14 @@ def main():
 
     with open(manifest_path, "w", encoding="utf-8") as file:
         json.dump(manifest, file, ensure_ascii=False, separators=(",", ":"))
+    summary = build_market_turn_summary(assets_payloads)
 
+    summary_path = OUTPUT_DIR / SUMMARY_FILE_NAME
+
+    with open(summary_path, "w", encoding="utf-8") as file:
+        json.dump(summary, file, ensure_ascii=False, separators=(",", ":"))
+
+    print(f"Market turn summary generado en: {summary_path}")
     print(f"\nManifest generado en: {manifest_path}")
     print(f"Activos incluidos: {len(manifest_assets)}")
 
